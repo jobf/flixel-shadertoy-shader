@@ -1,0 +1,22 @@
+{
+    "name": "flixel-shadertoy-shader",
+    "url": "https://github.com/jobf/flixel-shadertoy-shader/",
+    "license": "MIT",
+    "tags": [
+        "flixel",
+        "glsl",
+        "shader"
+    ],
+    "description": "Translation layer for shadertoy shaders in flixel.",
+    "version": "0.1.0",
+    "classPath": "src/",
+    "releasenote": "Initial release, does not have the complete set of shadertoy uniforms yet.",
+    "contributors": [
+        "jobf"
+    ],
+    "dependencies": {
+        "lime": "",
+        "openfl": "",
+        "flixel": ""
+    }
+}
