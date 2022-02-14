@@ -70,8 +70,10 @@ class PlayState extends FlxState
 
 	function displayInfo() {
 		#if web
+		var openFlContainer = js.Browser.document.getElementById("openfl-content");
+		openFlContainer.style.float = "left";
+		openFlContainer.style.marginRight = "15px";
 		var infoContainer = js.Browser.document.createDivElement();
-		infoContainer.style.paddingLeft = "15px";
 		js.Browser.document.body.appendChild(infoContainer);
 		var help = js.Browser.document.createParagraphElement();
 		help.innerText = "left/right arrow keys change active shader";
