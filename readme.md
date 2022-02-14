@@ -19,3 +19,5 @@ Reference in project.xml
 
 Check the `sample` directory in this repo for a flixel project using this.
 
+An html build of the sample is here https://jobf.github.io/flixel-shadertoy-shader/
+

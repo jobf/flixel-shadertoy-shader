@@ -8,6 +8,7 @@ class PlayState extends FlxState
 {
 	override public function create()
 	{
+		displayInfo();
 		super.create();
 		setCameraShader();
 	}
@@ -43,6 +44,7 @@ class PlayState extends FlxState
 	{
 		shader = shaders[shaderIndex]();
 		FlxG.camera.setFilters([new ShaderFilter(shader)]);
+		updateDisplayedInfo();
 	}
 
 	/** 
@@ -65,6 +67,28 @@ class PlayState extends FlxState
 		// mainImage function in a class
 		() -> new TestNormalisedZeroToOne()			
 	];
+
+	function displayInfo() {
+		#if web
+		var infoContainer = js.Browser.document.createDivElement();
+		infoContainer.style.paddingLeft = "15px";
+		js.Browser.document.body.appendChild(infoContainer);
+		var help = js.Browser.document.createParagraphElement();
+		help.innerText = "left/right arrow keys change active shader";
+		infoContainer.appendChild(help);
+		var shaderText = js.Browser.document.createParagraphElement();
+		shaderText.id = "shader-program";
+		shaderText.style.fontFamily = "monospace";
+		infoContainer.appendChild(shaderText);
+		#end
+	}
+
+	function updateDisplayedInfo() {
+		#if web
+		var shaderText = js.Browser.document.getElementById("shader-program");
+		shaderText.innerText = shader.shaderToyFragment;
+		#end
+	}
 }
 
 class TestNormalisedZeroToOne extends FlxShaderToyShader

@@ -91,7 +91,7 @@ class FlxShaderToyShader extends GraphicsShader
 	")
 	/** 
 		note that we only have #pragma header here so that the header section is injected properly
-		the actual shader code is added collateFragmentSource 
+		the actual shader code is added when collateFragmentSource is called
 	**/
 	@:glFragmentSource("
 		#pragma header
@@ -99,7 +99,8 @@ class FlxShaderToyShader extends GraphicsShader
 	")
 	public function new(shaderToyFragment:String = "")
 	{
-		collateFragmentSource(shaderToyFragment);
+		this.shaderToyFragment = shaderToyFragment.length > 0 ? shaderToyFragment : exampleShaderToyFragment;
+		collateFragmentSource();
 		super();
 		// init uniforms so they can be used
 		iResolution.value = [FlxG.camera.width, FlxG.camera.height, 0.0];
@@ -146,22 +147,16 @@ class FlxShaderToyShader extends GraphicsShader
 		}
 	';
 
+	public var shaderToyFragment(default, null):String;
+
 	/** set up the glFragmentSource **/
-	function collateFragmentSource(shaderToyFragment:String):Void
+	function collateFragmentSource():Void
 	{
 		var sb = new StringBuf();
-		// collect either the shader toy fragment that is passed in or default to the example one
-		if (shaderToyFragment.length > 0)
-		{
-			sb.add(shaderToyFragment);
-		}
-		else
-		{
-			sb.add(exampleShaderToyFragment);
-		}
-		// collect the main fucntion that will call the shader toy fragment
+		// collect the shader toy fragment
+		sb.add(shaderToyFragment);
+		// collect the main function that will call the shader toy fragment
 		sb.add(mainFragment);
-
 		// add collated glsl code to glFragmentSource so it runs
 		glFragmentSource += sb.toString();
 	}
