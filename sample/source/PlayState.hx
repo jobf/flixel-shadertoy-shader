@@ -1,5 +1,6 @@
 package;
 
+import openfl.display.FPS;
 import flixel.FlxG;
 import flixel.FlxState;
 import openfl.filters.ShaderFilter;
@@ -69,6 +70,7 @@ class PlayState extends FlxState
 	];
 
 	function displayInfo() {
+		FlxG.addChildBelowMouse(new FPS(10, 10, 0xffffff));
 		#if web
 		var openFlContainer = js.Browser.document.getElementById("openfl-content");
 		openFlContainer.style.float = "left";
