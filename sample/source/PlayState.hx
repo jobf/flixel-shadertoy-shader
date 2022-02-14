@@ -82,6 +82,7 @@ class PlayState extends FlxState
 		openFlContainer.style.float = "left";
 		openFlContainer.style.marginRight = "15px";
 		var infoContainer = js.Browser.document.createDivElement();
+		infoContainer.style.display = "table";
 		js.Browser.document.body.appendChild(infoContainer);
 		var help = js.Browser.document.createParagraphElement();
 		help.innerText = "left/right arrow keys change active shader";
@@ -89,6 +90,9 @@ class PlayState extends FlxState
 		var shaderText = js.Browser.document.createParagraphElement();
 		shaderText.id = "shader-program";
 		shaderText.style.fontFamily = "monospace";
+		shaderText.style.overflowY = "auto";
+		shaderText.style.position = "absolute";
+		shaderText.style.height = "90%";
 		infoContainer.appendChild(shaderText);
 		#end
 	}
