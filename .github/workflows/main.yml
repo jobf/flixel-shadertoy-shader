@@ -15,6 +15,8 @@ jobs:
         haxe-version: stable
         flixel-versions: release
         target: html5
+    - name: Setup
+      run: haxelib dev flixel-shadertoy-shader .
     - name: Build
       working-directory: ./sample
       run: haxelib run lime build html5 -final
