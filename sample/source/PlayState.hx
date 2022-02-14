@@ -67,7 +67,9 @@ class PlayState extends FlxState
 
 		// mainImage function in a class
 		() -> new TestNormalisedZeroToOne(),
-		
+		() -> new TestMousePosition(),
+		() -> new TestMouseClick(),
+
 		// some more fun ones
 		() -> new Flame(),
 		() -> new CineShaderLava(),
@@ -124,6 +126,98 @@ class TestNormalisedZeroToOne extends FlxShaderToyShader
 		');
 	}
 }
+
+
+class TestMousePosition extends FlxShaderToyShader
+{
+	public function new()
+	{
+		super('
+		// see #27 here - https://www.shadertoy.com/view/Md23DV
+		// MOUSE INPUT
+		//
+		// ShaderToy gives the mouse cursor coordinates and button clicks
+		// as an input via the iMouse vec4.
+		//
+		// The little disk will follow the cursor.
+		// The x coordinate of the cursor changes the background color.
+		// And if the cursor is inside the bigger disk, its color will change.
+		
+		float disk(vec2 r, vec2 center, float radius) {
+			return 1.0 - smoothstep( radius-0.5, radius+0.5, length(r-center));
+		}
+
+		void mainImage( out vec4 fragColor, in vec2 fragCoord )
+		{
+			vec2 p = vec2(fragCoord.xy / iResolution.xy);
+			vec2 r =  2.0*vec2(fragCoord.xy - 0.5*iResolution.xy)/iResolution.y;
+			float xMax = iResolution.x/iResolution.y;
+			
+			// background color depends on the x coordinate of the cursor
+			vec3 bgCol = vec3(iMouse.x / iResolution.x);
+			vec3 col1 = vec3(0.216, 0.471, 0.698); // blue
+			vec3 col2 = vec3(1.00, 0.329, 0.298); // yellow
+			vec3 col3 = vec3(0.867, 0.910, 0.247); // red
+			
+			vec3 ret = bgCol;
+			
+			vec2 center;
+			// draw the big yellow disk
+			center = vec2(100., iResolution.y/2.);
+			float radius = 60.;
+			// if the cursor coordinates is inside the disk
+			if( length(iMouse.xy-center)>radius ) {
+				// use color3
+				ret = mix(ret, col3, disk(fragCoord.xy, center, radius));
+			}
+			else {
+				// else use color2
+				ret = mix(ret, col2, disk(fragCoord.xy, center, radius));
+			}	
+			
+			// draw the small blue disk at the cursor
+			center = iMouse.xy;
+			ret = mix(ret, col1, disk(fragCoord.xy, center, 20.));
+			
+			vec3 pixel = ret;
+			fragColor = vec4(pixel, 1.0);
+		}
+		');
+	}
+}
+
+class TestMouseClick extends FlxShaderToyShader
+{
+	public function new()
+	{
+		super('
+		// see https://www.shadertoy.com/view/lssGzH
+
+		// a dumb test shader to see how iMouse works
+		// click and drag the mouse
+		
+		float smoothbump(float center, float width, float x) {
+		  float w2 = width/2.0;
+		  float cp = center+w2;
+		  float cm = center-w2;
+		  float c = smoothstep(cm, center, x) * (1.0-smoothstep(center, cp, x));
+		  return c;
+		}
+		
+		void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
+		  vec2  uv = (fragCoord.xy / iResolution.xy);
+		  vec4  m  = iMouse / iResolution.xyxy;
+		  float m0 = (m.z > 0.0) ? 0.25 : 0.0;
+		  float m1 = smoothbump(m.x,0.05,uv.x) *
+					 smoothbump(m.y,0.05,uv.y);
+		  float m2 = smoothbump(abs(m.z),0.05,uv.x) *
+					 smoothbump(abs(m.w),0.05,uv.y);
+		  fragColor = vec4(m1,m0,m2,1.0);
+		}
+		');
+	}
+}
+
 
 class Flame extends FlxShaderToyShader
 {

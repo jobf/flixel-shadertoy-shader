@@ -175,17 +175,19 @@ class FlxShaderToyShader extends GraphicsShader
 		mouse.getPosition(mousePosition);
 		// iMouse.xy is position of mouse
 		iMouse.value[0] = mousePosition.x;
-		iMouse.value[1] = mousePosition.y;
+		// map y mouse y to shader toy expected 
+		iMouse.value[1] = iResolution.value[1] - mousePosition.y;
 
-		// todo ! implement mouse click/release
-		// // iMouse.zw is last clicked position 
-		// iMouse.value[2] = -1.0;
-		// iMouse.value[3] = -1.0;
-		// if (mouse.justReleased)
-		// {
-		// 	iMouse.value[2] = mousePosition.x;
-		// 	iMouse.value[3] = mousePosition.y;
-		// }
+		// todo ! implement mouse clicked
+		// mouseUp
+		iMouse.value[2] = 0.0;
+		iMouse.value[3] = 0.0;
+
+		if(mouse.pressed){
+			// mouseDown
+			iMouse.value[2] = mousePosition.x;
+			iMouse.value[3] = iResolution.value[1] - mousePosition.y;
+		}
 	}
 }
 #end
