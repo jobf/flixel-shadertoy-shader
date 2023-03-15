@@ -80,30 +80,14 @@ class PlayState extends FlxState
 
 	function displayInfo() {
 		FlxG.addChildBelowMouse(new FPS(10, 10, 0xffffff));
-		#if web
-		var openFlContainer = js.Browser.document.getElementById("openfl-content");
-		openFlContainer.style.float = "left";
-		openFlContainer.style.marginRight = "15px";
-		var infoContainer = js.Browser.document.createDivElement();
-		infoContainer.style.display = "table";
-		js.Browser.document.body.appendChild(infoContainer);
-		var help = js.Browser.document.createParagraphElement();
-		help.innerText = "left/right arrow keys change active shader";
-		infoContainer.appendChild(help);
-		var shaderText = js.Browser.document.createParagraphElement();
-		shaderText.id = "shader-program";
-		shaderText.style.fontFamily = "monospace";
-		shaderText.style.overflowY = "auto";
-		shaderText.style.position = "absolute";
-		shaderText.style.height = "90%";
-		infoContainer.appendChild(shaderText);
-		#end
 	}
 
 	function updateDisplayedInfo() {
 		#if web
 		var shaderText = js.Browser.document.getElementById("shader-program");
-		shaderText.innerText = shader.void_mainImage;
+		shaderText.textContent = shader.void_mainImage;
+		var shaderEdit = js.Browser.document.getElementById("shader-edit");
+		shaderEdit.click();
 		#end
 	}
 }
