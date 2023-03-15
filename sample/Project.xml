@@ -82,5 +82,8 @@
 
 	<!-- _________________________________ Custom _______________________________ -->
 
+	<template path="custom-templates"/>
+
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+
 </project>
