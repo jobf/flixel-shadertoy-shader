@@ -1,8 +1,5 @@
 package;
 
-import flixel.FlxG;
-import flixel.input.mouse.FlxMouse;
-import flixel.math.FlxPoint;
 import openfl.display.GraphicsShader;
 
 using StringTools;
@@ -79,8 +76,8 @@ class ShaderToyHack extends GraphicsShader {
 		
 		super();
 		// init uniforms so they can be used
+		// todo get iResolution from openfl stage
 		iResolution.value = [800.0, 640.00, 0.0];
-		// iResolution.value = [FlxG.camera.width, FlxG.camera.height, 0.0];
 		iTime.value = [0.0];
 		iTimeDelta.value = [0.0];
 		iFrame.value = [0.0];
