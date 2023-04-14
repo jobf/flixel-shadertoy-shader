@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+
+	<title>FlxShaderToyExample</title>
+
+	<meta id="viewport" name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	
+	<link rel="shortcut icon" type="image/png" href="./favicon.png">
+
+	
+	<script type="text/javascript" src="./FlxShaderToyExample.js"></script>
+
+	<script>
+		window.addEventListener("touchmove", function (event) { event.preventDefault(); }, { capture: false, passive: false });
+		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+			var meta = document.getElementById("viewport");
+			meta.setAttribute('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
+		}
+	</script>
+
+		
+<style>
+	html,body { font-family: sans-serif; }
+	#openfl-content { margin: auto; background: #000000; width: 640px; height: 480px; }
+		@font-face {
+			font-family: 'Nokia Cellphone FC Small';
+			src: url('flixel/fonts/nokiafc22.ttf') format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: 'Monsterrat';
+			src: url('flixel/fonts/monsterrat.ttf') format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+	code{
+		white-space: pre-wrap;
+	}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/dark.min.css">
+
+</head>
+
+<body>
+
+	<h1>shadertoys running in flixel</h1>
+
+	<p>left/right arrow keys change active shader</p>
+
+	<noscript>This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this
+		page.</noscript>
+
+	<div id="openfl-content"></div>
+
+	<pre>
+		<code id="shader-program" class="language-glsl">
+		</code>
+	</pre>
+
+	<textarea style="display:none;" id="shader-edit"></textarea>
+
+	<script type="text/javascript">
+		lime.embed("FlxShaderToyExample", "openfl-content", null, null, { parameters: {} });
+	</script>
+
+	<script type="module">
+		import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/es/highlight.min.js';
+		import glsl from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/es/languages/glsl.min.js';
+		hljs.registerLanguage('glsl', glsl);
+
+		/* document.window.hack = function(){ */
+		document.addEventListener('DOMContentLoaded', (event) => {
+			hljs.highlightAll();
+			document.querySelectorAll('textarea').forEach((el) => {
+
+				el.addEventListener('click', function(e){
+					hljs.highlightAll();
+				});
+			});
+		});
+	</script>
+
+
+</body>
+
+</html>
